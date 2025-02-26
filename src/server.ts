@@ -19,12 +19,18 @@ app.use(morgan("dev"));
 
 // Default Route
 app.get("/", (req, res) => {
+  console.log("🚀 Server received a request!");
   res.send("🚀 Server is running!");
 });
 
 // API Routes
-app.use("/", routes); // Added "/api" as a prefix for clarity
+app.use("/", routes);
 
-// Server Start
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`🚀 Server running on http://localhost:${PORT}`));
+// Start Server (if NOT deploying to Vercel)
+if (process.env.NODE_ENV !== "vercel") {
+  const PORT = process.env.PORT || 5000;
+  app.listen(PORT, () => console.log(`🚀 Server running on http://localhost:${PORT}`));
+}
+
+// Export for Vercel
+export default app;
