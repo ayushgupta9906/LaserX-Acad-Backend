@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import morgan from "morgan";
 import connectDB from "./config/db";
 import routes from "./routes";
+import { Request, Response } from "express";
 
 dotenv.config();
 const app = express();
@@ -12,13 +13,14 @@ const app = express();
 connectDB();
 
 // Middleware
-app.use(cors({ origin: process.env.CLIENT_URL || "http://localhost:3000", credentials: true }));
+app.use(cors({ origin:"https://laserxacad.vercel.app", credentials: true }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(morgan("dev"));
 
 // Default Route
-app.get("/", (req, res) => {
+
+app.get("/", (req: Request, res: Response) => {
   console.log("🚀 Server received a request!");
   res.send("🚀 Server is running!");
 });
